@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Reunion Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/css/tailwind.output.css') }}" />
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
@@ -32,12 +33,10 @@
                             <!-- Email -->
                             <label class="block text-sm">
                                 <span class="text-gray-700">Email</span>
-                                <input name="email" type="email" value="{{ old('email') }}" required
-                                    class="block w-full mt-1 text-sm
+                                <input name="email" type="email" value="{{ old('email') }}" required class="block w-full mt-1 text-sm
                          focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
                          form-input
-                         @error('email') border-red-500 @enderror"
-                                    placeholder="you@example.com" />
+                         @error('email') border-red-500 @enderror" placeholder="you@example.com" />
                                 @error('email')
                                     <span class="text-xs text-red-600">{{ $message }}</span>
                                 @enderror
@@ -46,20 +45,17 @@
                             <!-- Password -->
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700">Password</span>
-                                <input name="password" type="password" required
-                                    class="block w-full mt-1 text-sm
+                                <input name="password" type="password" required class="block w-full mt-1 text-sm
                          focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
                          form-input
-                         @error('password') border-red-500 @enderror"
-                                    placeholder="••••••••••••" />
+                         @error('password') border-red-500 @enderror" placeholder="••••••••••••" />
                                 @error('password')
                                     <span class="text-xs text-red-600">{{ $message }}</span>
                                 @enderror
                             </label>
 
                             <!-- Submit Button -->
-                            <button type="submit"
-                                class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white
+                            <button type="submit" class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white
                        transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg
                        active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                 Log in
@@ -74,17 +70,14 @@
                         </form>
 
                         <hr class="my-8" />
-                        <div>
+                        <div class="flex items-center justify-center space-x-4">
                             <span
                                 class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white bg-purple-600 border border-transparent rounded-md hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-
-                           Eamil::admin@deelko.com
-                                </span>
-                                <span
-                                    class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white bg-purple-600 border border-transparent rounded-md hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-
-                                    pass:: <span class="text-xs text-gray-200">Deelko@
-                                    </span>
+                                Eamil:: info@reunion.com
+                            </span>
+                            <span
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white bg-purple-600 border border-transparent rounded-md hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                pass:: Reunion@
                         </div>
 
 

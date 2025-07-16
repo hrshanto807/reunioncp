@@ -73,7 +73,7 @@ body {
 
 /* Statistics Cards */
 .stats-card {
-    background: white;
+    
     border-radius: 20px;
     padding: 2rem;
     text-align: center;
@@ -100,7 +100,7 @@ body {
 
 /* News Cards */
 .news-card {
-    background: white;
+    
     border-radius: 15px;
     padding: 1.5rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -121,7 +121,7 @@ body {
     border-radius: 10px;
     font-size: 14px;
     transition: all 0.3s ease;
-    background: white;
+    
     font-family: 'Noto Sans Bengali', sans-serif;
 }
 
@@ -133,7 +133,7 @@ body {
 
 /* Alumni Cards */
 .alumni-card {
-    background: white;
+    
     border-radius: 15px;
     padding: 1.5rem;
     text-align: center;
@@ -148,7 +148,7 @@ body {
 
 /* Schedule & Timeline */
 .schedule-item {
-    background: white;
+    
     border-radius: 15px;
     padding: 1.5rem;
     margin-bottom: 1rem;
@@ -214,8 +214,7 @@ body {
 }
 
 /* Contact Cards */
-.contact-card {
-    background: white;
+.contact-card {   
     border-radius: 15px;
     padding: 2rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -242,7 +241,7 @@ body {
 
 /* Financial Section Specific Styles */
 .financial-summary-card {
-    background: white;
+    
     border-radius: 20px;
     padding: 2rem;
     text-align: center;

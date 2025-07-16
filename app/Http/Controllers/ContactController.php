@@ -18,7 +18,7 @@ class ContactController extends Controller
 
         // Send mail to admin
         Mail::send('emails.contact-admin', $data, function($mail) {
-            $mail->to('hasnishek@gmail.com')
+            $mail->to('info@deelko.com')
                  ->subject('নতুন বার্তা পেয়েছেন');
         });
 

@@ -23,7 +23,7 @@
                                 Total Students
                             </p>
                             <p class="text-lg font-semibold text-gray-700">
-                                6389
+                                00
                             </p>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                 Account balance
                             </p>
                             <p class="text-lg font-semibold text-gray-700">
-                                $ 46,760.89
+                               00.00
                             </p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                 Total Income
                             </p>
                             <p class="text-lg font-semibold text-gray-700">
-                                $ 46,760.89
+                                00.00
                             </p>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                                Total Expense
                             </p>
                             <p class="text-lg font-semibold text-gray-700">
-                                $ 46,760.89
+                                00.00
                             </p>
                         </div>
                     </div>                

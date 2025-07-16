@@ -8,7 +8,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RegistrationController;
-
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BlogCategoryController;
 
 // login page 
 
@@ -42,6 +43,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/studentList', [StudentController::class, 'index'])->name('students');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    // news categories and news management   
+    Route::resource('news_categories', BlogCategoryController::class)
+        ->parameters(['news_categories' => 'category'])
+        ->except(['show']);
+
+    // Add your activate/deactivate routes here, example:
+    Route::get('categories/{category}/activate', [BlogCategoryController::class, 'activate'])->name('categories.activate');
+    Route::get('categories/{category}/deactivate', [BlogCategoryController::class, 'deactivate'])->name('categories.deactivate');
+    Route::resource('blogs', BlogController::class);
 });
 
 
@@ -50,6 +60,5 @@ Route::resource('registration', RegistrationController::class);
 
 
 
+
 Route::post('/contact-send', [ContactController::class, 'send'])->name('contact.send');
-
-

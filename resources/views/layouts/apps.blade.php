@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/Chart.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/tailwind.output.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/fontawesome/all.min.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Summernote CSS & JS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 </head>
 
@@ -27,19 +33,25 @@
             @yield('content')
         </div>
     </div>
+
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js') }}"></script>
     <script src="{{ asset('assets/fontawesome/all.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/js/datatables/buttons.print.min.js') }}"></script>   
+    <script src="{{ asset('assets/js/datatables/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datatables/custom.js') }}"></script>
     <script src="{{ asset('assets/js/alpine-3.x.x.min.js') }}"></script>
     <script src="{{ asset('assets/js/alpine-2.x.x.min.js') }}"></script>
     <script src="{{ asset('assets/js/alpine-2.x.x.min.js') }}"></script>
     <script src="{{ asset('assets/js/Chart.min.js') }}"></script>
     <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
     <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
+    <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+    <script src="{{ asset('assets/js/summernote-lite.min.js') }}"></script>
+    <script src="{{ asset('assets/js/alpine.js') }}" defer></script>
+
 </body>
 
 </html>

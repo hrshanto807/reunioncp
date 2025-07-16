@@ -67,21 +67,7 @@
                                     {{ $errors->first() }}
                                 </div>
                             @endif
-                        </form>
-
-                        <hr class="my-8" />
-                        <div class="flex items-center justify-center space-x-4">
-                            <span
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white bg-purple-600 border border-transparent rounded-md hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                Eamil:: info@reunion.com
-                            </span>
-                            <span
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white bg-purple-600 border border-transparent rounded-md hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                pass:: Reunion@
-                        </div>
-
-
-
+                        </form>                      
                     </div>
                 </div>
             </div>

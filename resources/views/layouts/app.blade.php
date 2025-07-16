@@ -56,12 +56,7 @@
                         class="flex items-center space-x-2 px-4 py-2 rounded-xl font-medium text-white hover:bg-white/10 transition-all duration-300 group">
                         <i class="fas fa-calendar text-orange-400"></i>
                         <span>কার্যক্রম</span>
-                    </a>
-                    {{-- <a href="admin-panel/index.html"
-                        class="flex items-center space-x-2 px-4 py-2 rounded-xl font-medium text-white hover:bg-white/10 transition-all duration-300 group">
-                        <i class="fas fa-calendar text-orange-400"></i>
-                        <span>Admin</span>
-                    </a> --}}
+                    </a>                   
                 </nav>
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-4">
@@ -352,9 +347,8 @@
                     <div>
                         <a href="{{ route('home') }}">
                             <div class="flex items-center space-x-3 mb-6">
-                                <div
-                                    class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-graduation-cap text-white text-xl"></i>
+                                <div  class="w-16 h-16 bg-gradient-to-br">
+                                    <img src="{{ asset('assets/logo.png') }}" alt="Logo" class="w-12 h-12 rounded-full shadow-lg">
                                 </div>
                                 <div>
                                     <h3 class="font-bold">ছাতার পাইয়া বহুমুখী উচ্চ বিদ্যালয়</h3>
@@ -424,7 +418,8 @@
     <script src="{{ asset('assets/js/datatables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/js/datatables/buttons.print.min.js') }}"></script>  
+    <script src="{{ asset('assets/js/datatables/buttons.print.min.js') }}"></script> 
+     <script src="{{ asset('assets/js/datatables/custom.js') }}"></script>   
     <script src="{{ asset('assets/js/jszip.min.js') }}"></script>
     <script src="{{ asset('assets/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('assets/js/vfs_fonts.js') }}"></script>   
@@ -504,28 +499,7 @@
             },
         });
     </script>
-    <script>
-        $(document).ready(function () {
-            if (!$.fn.DataTable.isDataTable('#datatable')) {
-                $('#datatable').DataTable({
-                    responsive: true,
-                    scrollX: true,
-                    dom: 'Bfrtip',
-                    buttons: ['copy', 'excel', 'pdf', 'print'],
-                    language: {
-                        search: "",
-                        searchPlaceholder: "Search...",
-                        lengthMenu: "প্রতি পৃষ্ঠায় _MENU_ রেকর্ড",
-                        info: "_TOTAL_ রেকর্ডের মধ্যে _START_ থেকে _END_ প্রদর্শিত হচ্ছে",
-                        paginate: {
-                            next: "পরবর্তী",
-                            previous: "পূর্ববর্তী"
-                        },
-                        zeroRecords: "কোনো মিল খুঁজে পাওয়া যায়নি"
-                    }
-                });
-            }
-        });
-    </script>
+
+
 </body>
 </html>

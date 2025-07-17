@@ -13,7 +13,8 @@ class RegistrationController extends Controller
      */
     public function index()
     {
-        //
+        $registrations = Registration::orderBy('id', 'desc')->paginate();
+        return view('pages.admin.student.index', compact('registrations'));
     }
 
     /**
@@ -21,7 +22,7 @@ class RegistrationController extends Controller
      */
     public function create()
     {
-        return view('pages.web.index');
+        //
     }
 
     public function store(Request $request)
@@ -93,16 +94,77 @@ class RegistrationController extends Controller
      */
     public function edit(Registration $registration)
     {
-        //
+        return view('pages.admin.student.edit', compact('registration'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Registration $registration)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'batch' => 'required|integer',
+            'father_name' => 'required|string',
+            'blood' => 'required',
+            'tshirt' => 'required',
+            'phone' => 'required',
+            'present_address' => 'required',
+            'permanent_address' => 'required',
+            'registration_type' => 'required|in:single,group',
+            'participant_count' => 'nullable|integer',
+            'amount' => 'required',
+            'payment_method' => 'required',
+            'bkash_num' => 'required',
+            'bkash_trans_id' => 'required',
+            'photo' => 'nullable|image|max:2048',
+            'email' => 'nullable|email',
+            'profession' => 'nullable|string|max:255',
+            'representative_name' => 'nullable|string|max:255',
+            'status' => 'nullable|in:Approved,Cancel,painding',
+        ]);
+       
+        $validated['amount'] = englishNumber($validated['amount']);       
+        if ($request->hasFile('photo')) {
+          
+            if ($registration->photo && file_exists(public_path($registration->photo))) {
+                unlink(public_path($registration->photo));
+            }
+
+            $photo = $request->file('photo');
+            $photoName = time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('photos'), $photoName);
+            $registration->photo = 'photos/' . $photoName;
+        }
+
+        // Fill/update model data
+        $registration->fill([
+            'name' => $validated['name'],
+            'batch' => $validated['batch'],
+            'father_name' => $validated['father_name'],
+            'blood' => $validated['blood'],
+            'tshirt' => $validated['tshirt'],
+            'phone' => $validated['phone'],
+            'email' => $validated['email'] ?? null,
+            'profession' => $validated['profession'] ?? null,
+            'present_address' => $validated['present_address'],
+            'permanent_address' => $validated['permanent_address'],
+            'representative_name' => $validated['representative_name'] ?? null,
+            'registration_type' => $validated['registration_type'],
+            'participant_count' => $validated['participant_count'] ?? 1,
+            'bkash_num' => $validated['bkash_num'],
+            'bkash_trans_id' => $validated['bkash_trans_id'],
+            'payment_method' => $validated['payment_method'],
+            'amount' => $validated['amount'],
+            'status' => 'painding',
+        ]);
+
+        $registration->save();
+
+        return redirect()->route('registration.index')->with('success', 'রেজিস্ট্রেশন তথ্য সফলভাবে হালনাগাদ হয়েছে!');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -110,5 +172,18 @@ class RegistrationController extends Controller
     public function destroy(Registration $registration)
     {
         //
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Approved,Cancel,painding',
+        ]);
+
+        $registration = Registration::findOrFail($id);
+        $registration->status = $request->status;
+        $registration->save();
+
+        return back()->with('success', 'Status updated successfully.');
     }
 }

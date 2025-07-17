@@ -14,11 +14,10 @@ class BlogCategory extends Model
         'status',
         'del_status'
     ];
-    public function blog()
-    {
-        return $this->hasMany(Blog::class);
-    }
-
+  public function blog()
+{
+    return $this->hasMany(Blog::class, 'category_id'); 
+}
     // Check if used in any orders
     public function isUsedElsewhere()
     {

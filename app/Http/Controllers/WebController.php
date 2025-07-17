@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Registration;
+use App\Models\Blog;
 use Carbon\Carbon;
+
 
 
 class WebController extends Controller
@@ -18,51 +20,42 @@ class WebController extends Controller
         $today = Carbon::now();
 
         // Calculate days difference (if negative, return 0)
-        $daysLeft = $today->diffInDays($eidPlus2Days, false); // false for signed difference
+        $daysLeft = $today->diffInDays($eidPlus2Days, false);
 
         if ($daysLeft < 0) {
             $daysLeft = 0;
         }
 
-
-
-        $alumnicount = Registration::orderBy('id', 'desc')->count();
-        $alumni = Registration::latest()->take(8)->get();
-        return view('pages.web.index', compact('alumnicount', 'alumni','daysLeft'));
+        $alumniall = Registration::orderBy('id', 'desc')->count();
+        $alumnicount = Registration::orderBy('id', 'desc')->where('status', 'Approved')->count();
+        $newscount = Blog::orderBy('id', 'desc')->count();
+        $alumni = Registration::latest()->where('status', 'Approved')->take(8)->get();
+        $newsItems = Blog::orderBy('id', 'desc')->take(3)->get();
+        return view('pages.web.index', compact('alumnicount', 'alumni', 'daysLeft', 'newsItems', 'newscount','alumniall'));
     }
 
     //student view
     public function student()
     {
-        $alumni = Registration::latest()->paginate(8);
+        $alumni = Registration::latest()->where('status', 'Approved')->paginate(20);
         return view('pages.web.students', compact('alumni'));
     }
     //news view
     public function news()
     {
-        return view('pages.web.news');
+        $newsItems = Blog::latest()->paginate(9);
+        return view('pages.web.news', compact('newsItems'));
     }
 
-    // //single news
-    // public function newsDetails()
-    // {
-    //     return view('pages.newsDetails');
-    // }
-    //single news 1
-    public function newsDetails1()
+    //single news
+    public function newsDetails($encodedId)
     {
-        return view('pages.web.newsDetails1');
+        $id = decode_id($encodedId);
+        $news = Blog::findOrFail($id);
+
+        return view('pages.web.newsDetails', compact('news'));
     }
-    //single news 2
-    public function newsDetails2()
-    {
-        return view('pages.web.newsDetails2');
-    }
-    //single news 3
-    public function newsDetails3()
-    {
-        return view('pages.web.newsDetails3');
-    }
+
     //account view
     public function account()
     {

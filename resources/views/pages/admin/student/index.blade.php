@@ -7,7 +7,17 @@
                 <h2 class="text-xl font-bold text-green-600 mb-6 flex items-center">
                     <i class="fas fa-users mr-2"></i> অংশগ্রহণকারীদের পেমেন্ট তালিকা
                 </h2>
+      @if(session('success'))
+      <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="bg-green-100 text-green-800 p-4 rounded mb-4">
+        {{ session('success') }}
+      </div>
+      @endif      
 
+      @if(session('error'))
+      <div class="bg-red-100 text-red-800 p-4 rounded mb-4">
+        {{ session('error') }}
+      </div>
+      @endif
                 <!-- Scrollable Table Wrapper -->
                 <div class="w-full overflow-x-auto block">
                     <table id="datatable" class="display nowrap" style="width:100%">
@@ -18,7 +28,11 @@
                                 <th class="py-3 px-4 border border-gray-300 whitespace-nowrap">ব্যাচ</th>
                                 <th class="py-3 px-4 border border-gray-300 whitespace-nowrap">মোবাইল নম্বর</th>
                                 <th class="py-3 px-4 border border-gray-300 whitespace-nowrap">বর্তমান ঠিকানা</th>
+                                <th class="py-3 px-4 border border-gray-300 whitespace-nowrap text-center">স্ট্যাটাস</th>
                                 <th class="py-3 px-4 border border-gray-300 text-right whitespace-nowrap">পেমেন্ট (৳)
+                                </th>                               
+
+                                <th class="py-3 px-4 border border-gray-300 text-right whitespace-nowrap">Action
                                 </th>
                             </tr>
                         </thead>
@@ -31,8 +45,42 @@
                                     <td class="py-3 px-4 border border-gray-300">{{ $item->batch }}</td>
                                     <td class="py-3 px-4 border border-gray-300">{{ $item->phone }}</td>
                                     <td class="py-3 px-4 border border-gray-300">{{ $item->present_address }}</td>
+                                     <td class="py-3 px-4 border border-gray-300 text-center">
+                                            @if ($item->status == 'Approved')
+                                                <button   class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700">
+                                                    Approved
+                                                </button>
+                                            @elseif ($item->status == 'Cancel')
+                                                <button class="bg-red-500 text-white text-xs px-3 py-1 rounded hover:bg-red-600">
+                                                    Cancel
+                                                </button>
+                                            @elseif ($item->status == 'painding')
+                                                <button class="bg-yellow-500 text-white text-xs px-3 py-1 rounded hover:bg-yellow-600">
+                                                    Pending
+                                                </button>
+                                            @endif
+                                    </td>
                                     <td class="py-3 px-4 border border-gray-300 text-green-600  font-semibold">
                                         {{ banglaNumber(number_format($item->amount, 0, '.', ',')) }}
+                                    </td>                                   
+                                    <td class="py-3 px-4 border border-gray-300 space-y-2 flex items-center justify-center gap-2">
+                                        <form action="{{ route('registration.updateStatus', $item->id) }}" method="POST" onsubmit="return confirm('আপনি কি এই স্ট্যাটাস পরিবর্তন করতে চান?')">
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="status" onchange="this.form.submit()" class="text-xs px-3 py-1 rounded border border-gray-300 focus:outline-none focus:ring focus:border-blue-300">
+                                                <option >Select</option>
+                                                <option value="Approved" {{ $item->status == 'Approved' ? 'selected' : '' }}>Approved</option>
+                                                
+                                                <option value="Cancel" {{ $item->status == 'Cancel' ? 'selected' : '' }}>Cancel</option>
+                                                <option value="Pending" {{ $item->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                            </select>
+                                        </form>
+                                        
+                                            <a href="{{ route('registration.edit', $item->id) }}"
+                                           class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
+                                                ✏️ Edit
+                                            </a>
+                                        
                                     </td>
                                 </tr>
                             @endforeach

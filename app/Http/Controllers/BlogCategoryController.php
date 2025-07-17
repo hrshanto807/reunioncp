@@ -54,10 +54,19 @@ class BlogCategoryController extends Controller
 
     public function destroy(BlogCategory $category)
     {
+        // Check if the category is used in any blog
+        if ($category->blog()->exists()) {
+            return redirect()->route('news_categories.index')
+                ->with('error', 'Cannot delete category: it is used by one or more blogs.');
+        }
+
+        // Safe to delete
         $category->delete();
 
-        return redirect()->route('news_categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('news_categories.index')
+            ->with('success', 'Category deleted successfully.');
     }
+
 
     public function deactivate(BlogCategory $category)
     {

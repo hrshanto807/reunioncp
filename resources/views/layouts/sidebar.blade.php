@@ -217,7 +217,7 @@
                             <a class="w-full" href="pages/activity-schedule.html">Activity Schedule</a>
                         </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
-                            <a class="w-full" href="pages/sponsors.html">Sponsors</a>
+                            <a class="w-full" href="{{ route('sponsors.index') }}">Sponsors</a>
                         </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
                             <a class="w-full" href="pages/contact-us.html">Contact Us</a>

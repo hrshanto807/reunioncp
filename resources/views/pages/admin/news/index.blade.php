@@ -56,16 +56,12 @@
               class="hover:bg-gray-50 border-b"
             >
               <td class="px-4 py-2 border">{{ banglaNumber($loop->iteration) }}</td>
-              <td class="px-4 py-2 border">
-                @if($blog->photo && file_exists(public_path($blog->photo)))
+              <td class="px-4 py-2 border">               
                 <img
                   src="{{ asset($blog->photo) }}"
                   alt="Blog Photo"
                   class="w-16 h-16 object-cover rounded"
-                />
-                @else
-                <span class="text-gray-400 italic">No Image</span>
-                @endif
+                />               
               </td>
               <td class="px-4 py-2 border">{{ $blog->title }}</td>
               <td class="px-4 py-2 border">{{ $blog->category->name }}</td>

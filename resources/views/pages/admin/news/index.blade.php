@@ -10,12 +10,12 @@
   <div class="max-w-7xl mx-auto px-6">
     <div class="bg-white rounded-2xl p-6 shadow-lg">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Blog</h2>
+        <h2 class="text-2xl font-bold">News List</h2>
         <button
           @click="showAddModal = true; initSummernote('add')"
           class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
         >
-          Add Blog
+          Add News
         </button>
       </div>
 
@@ -111,7 +111,7 @@
         @click.stop
       >
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-bold">Add Blog</h3>
+          <h3 class="text-lg font-bold">Add News</h3>
           <button
             @click="closeModals()"
             class="text-gray-600 hover:text-black text-2xl font-bold"
@@ -233,7 +233,7 @@
         @click.stop
       >
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-bold">Edit Blog</h3>
+          <h3 class="text-lg font-bold">Edit News</h3>
           <button
             @click="closeModals()"
             class="text-gray-600 hover:text-black text-2xl font-bold"

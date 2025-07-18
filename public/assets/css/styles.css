@@ -18,6 +18,31 @@ body {
     background: #f9fafb;
 }
 
+ /* For all modern browsers */
+  div.dataTables_wrapper {
+    scrollbar-width: thin;               /* Firefox */
+    scrollbar-color: #4ade80 #f0f0f0;    /* thumb and track color */
+  }
+
+  /* For WebKit browsers (Chrome, Edge, Safari) */
+  div.dataTables_wrapper::-webkit-scrollbar {
+    height: 8px; /* height for horizontal scroll */
+  }
+
+  div.dataTables_wrapper::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 8px;
+  }
+
+  div.dataTables_wrapper::-webkit-scrollbar-thumb {
+    background-color: #4ade80; /* lime-500 */
+    border-radius: 8px;
+  }
+
+  div.dataTables_wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #22c55e; /* lime-600 */
+  }
+
 /* Header Styles */
 .glass-nav {
     background: rgba(15, 23, 42, 0.8);

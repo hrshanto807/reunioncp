@@ -50,9 +50,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('blogs', BlogController::class);
     Route::put('/registration/update-status/{id}', [RegistrationController::class, 'updateStatus'])->name('registration.updateStatus');
     Route::resource('sponsors', SponsorController::class);
+    // registration resource
+    Route::resource('registration', RegistrationController::class);
 });
 
 
-// registration resource
-Route::resource('registration', RegistrationController::class);
+
 Route::get('blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+Route::post('store/student', [RegistrationController::class, 'store'])->name('registration.store');

@@ -21,11 +21,11 @@
         <!-- Right: Icons -->
         <ul class="flex items-center flex-shrink-0 space-x-6">
             <!-- Profile menu -->
-            <li class="relative">
+            <li class="relative flex items-center justify-center gap-4">
+                <a href="{{ route('home') }}" class="flex items-center justify-center text-purple-600 text-3xl" title="visit Website" target="_blank"> <i class="fa-solid fa-globe"></i></a>
                 <button id="profileToggleBtn" class="align-middle rounded-full focus:outline-none" aria-label="Account"
                     aria-haspopup="true">
-                    <img class="object-cover w-8 h-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1502378735452-bc7d86632805" alt="Profile" />
+                    <img class="object-cover w-10 h-10 rounded-full" src="{{ asset('assets/logo.png') }}" alt="Profile" />
                 </button>
 
                 <!-- Dropdown -->
@@ -69,7 +69,7 @@
                         </form>
                     </li>
                 </ul>
-            </li>           
+            </li>
         </ul>
     </div>
 
@@ -78,12 +78,12 @@
         const toggleBtn = document.getElementById('profileToggleBtn');
         const dropdown = document.getElementById('profileDropdown');
 
-        toggleBtn.addEventListener('click', function(e) {
+        toggleBtn.addEventListener('click', function (e) {
             e.stopPropagation();
             dropdown.classList.toggle('hidden');
         });
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!dropdown.contains(e.target)) {
                 dropdown.classList.add('hidden');
             }

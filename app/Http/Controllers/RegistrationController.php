@@ -42,8 +42,8 @@ class RegistrationController extends Controller
             'terms_agreed' => 'required|accepted',
             'amount' => 'required',
             'payment_method' => 'required',
-            'bkash_num' => 'required',
-            'bkash_trans_id' => 'required',
+            // 'bkash_num' => 'required',
+            // 'bkash_trans_id' => 'required',
         ]);
 
         // Convert Bangla number to English for amount field
@@ -70,8 +70,8 @@ class RegistrationController extends Controller
         $registration->registration_type = $validated['registration_type'];
         $registration->participant_count = $validated['participant_count'] ?? 1;
         $registration->status = 'painding';
-        $registration->bkash_trans_id = $validated['bkash_trans_id'];
-        $registration->bkash_num = $validated['bkash_num'];
+        // $registration->bkash_trans_id = $validated['bkash_trans_id'];
+        // $registration->bkash_num = $validated['bkash_num'];
         $registration->amount = $validated['amount'];
         $registration->payment_method = $validated['payment_method'];
         $registration->terms_agreed = true;

@@ -1,33 +1,41 @@
 @extends('layouts.app')
 @section('content')
     <!-- Hero Section -->
-    <section id="" class="hero-bg h-screen flex justify-center items-end">
+    <section id="" class="hero-bg h-screen flex justify-center items-end"
+        style="background: 
+        linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.85)),
+        radial-gradient(ellipse at top, rgba(99, 102, 241, 0.3), transparent 70%),
+        radial-gradient(ellipse at bottom right, rgba(236, 72, 153, 0.3), transparent 70%),
+        url({{ asset($hero->background_image ?? 'assets/banner.webp') }}); 
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;">
         <div class="text-center">
             <div class="max-w-6xl mx-auto px-3">
                 <h1 class="text-6xl md:text-8xl lg:text-8xl font-black mb-8 leading-none text-white">
-                    স্বাগতম পুনর্মিলনী ২০২৬
+                    {{ $hero->title ?? 'স্বাগতম পুনর্মিলনী ২০২৬' }}
                 </h1>
 
                 <div class="mb-12">
                     <p class="text-xl md:text-2xl lg:text-3xl font-light text-white/90 mb-4">
-                        ছাতার পাইয়া বহুমুখী উচ্চ বিদ্যালয়ের সকল প্রাক্তন ও বর্তমান
+                        {{ $hero->subtitle ?? 'ছাতার পাইয়া বহুমুখী উচ্চ বিদ্যালয়ের সকল প্রাক্তন ও বর্তমান' }}
                     </p>
                     <p class="text-lg md:text-xl text-orange-300 font-medium">
-                        শিক্ষার্থীদের জন্য
+                        {{ $hero->highlight ?? 'শিক্ষার্থীদের জন্য' }}
                     </p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20">
-                    <a href="#registration"
+                    <a href="{{ $hero->register_button_url ?? '#registration' }}"
                         class="bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 hover:from-orange-600 hover:via-red-600 hover:to-pink-700 text-white px-12 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-user-plus mr-3"></i>
-                        এখনই নিবন্ধন করুন
+                        {{ $hero->register_button_text ?? 'এখনই নিবন্ধন করুন' }}
                     </a>
-                    <button
+                    <a href="{{ $hero->announcement_button_url ?? '#news' }}"
                         class="border-2 border-white text-white px-12 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 hover:bg-white hover:text-gray-900">
                         <i class="fas fa-bullhorn mr-3"></i>
-                        সর্বশেষ খোষণা
-                    </button>
+                        {{ $hero->announcement_button_text ?? 'সর্বশেষ খোষণা' }}
+                    </a>
                 </div>
             </div>
         </div>
@@ -56,47 +64,48 @@
                         ব্যাচ/সাল
                     </label>
                     <select name="batch" class="form-input">
-                                    <option value="">বছর নির্বাচন করুন</option>
-                                    @for ($year = 2025; $year >= 1964; $year--)
-                                        <option value="{{ $year }}"
-                                            {{ old('batch') == $year ? 'selected' : '' }}>
-                                            {{ $year }}</option>
-                                    @endfor
-                                </select>
+                        <option value="">বছর নির্বাচন করুন</option>
+                        @for ($year = 2025; $year >= 1964; $year--)
+                            <option value="{{ $year }}" {{ old('batch') == $year ? 'selected' : '' }}>
+                                {{ $year }}</option>
+                        @endfor
+                    </select>
                 </div>
             </div>
             <!-- Alumni Cards Container -->
             <div id="alumniContainer" class="grid md:grid-cols-4 gap-6">
-            @foreach($alumni as $student)
-            <div class="alumni-card group" data-name="{{ $student->name }}" data-batch="{{ $student->batch }}">
-                <div class="w-20 h-20 rounded-2xl overflow-hidden mx-auto mb-4 shadow-lg group-hover:scale-110 transition-all duration-300">
-                    <img src="{{ asset($student->photo ?? 'images/default.jpg') }}" alt="{{ $student->name }}" class="w-full h-full object-cover">
-                </div>
-                <h3 class="font-bold text-gray-900 mb-3 text-lg">{{ $student->name }}</h3>
+                @foreach ($alumni as $student)
+                    <div class="alumni-card group" data-name="{{ $student->name }}" data-batch="{{ $student->batch }}">
+                        <div
+                            class="w-20 h-20 rounded-2xl overflow-hidden mx-auto mb-4 shadow-lg group-hover:scale-110 transition-all duration-300">
+                            <img src="{{ asset($student->photo ?? 'images/default.jpg') }}" alt="{{ $student->name }}"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-3 text-lg">{{ $student->name }}</h3>
 
-                <div class="space-y-2 mb-4">
-                    <div class="flex items-center text-sm text-gray-600">
-                        <i class="fas fa-graduation-cap text-blue-500 mr-2"></i>
-                        <span>ব্যাচ: {{ $student->batch }}</span>
-                    </div>
-                    <div class="flex items-center text-sm text-gray-600">
-                        <i class="fas fa-book text-green-500 mr-2"></i>
-                        <span>{{ $student->profession ?? 'অজানা' }}</span>
-                    </div>
-                    <div class="flex items-center text-sm text-gray-600">
-                        <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
-                        <span>{{ $student->present_address ?? 'ঠিকানা নেই' }}</span>
-                    </div>
-                </div>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-graduation-cap text-blue-500 mr-2"></i>
+                                <span>ব্যাচ: {{ $student->batch }}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-book text-green-500 mr-2"></i>
+                                <span>{{ $student->profession ?? 'অজানা' }}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+                                <span>{{ $student->present_address ?? 'ঠিকানা নেই' }}</span>
+                            </div>
+                        </div>
 
-                <div class="flex items-center justify-center mb-4">
-                    <span class="inline-flex items-center px-3 py-1 bg-red-100 text-red-700 text-xs rounded-full">
-                        <i class="fas fa-tint mr-1"></i>
-                        {{ $student->blood }}
-                    </span>
-                </div>
-            </div>
-            @endforeach
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="inline-flex items-center px-3 py-1 bg-red-100 text-red-700 text-xs rounded-full">
+                                <i class="fas fa-tint mr-1"></i>
+                                {{ $student->blood }}
+                            </span>
+                        </div>
+                    </div>
+                @endforeach
             </div>
             <!-- Button -->
             <div class="text-center mt-12">
@@ -125,11 +134,11 @@
                         <i
                             class="fas fa-user text-3xl text-white group-hover:rotate-12 transition-transform duration-300"></i>
                     </div>
-                    <div class="counter text-5xl font-black text-blue-600 mb-3" data-target="{{$alumnicount}}">0</div>
+                    <div class="counter text-5xl font-black text-blue-600 mb-3" data-target="{{ $alumnicount }}">0</div>
                     <div class="text-gray-700 font-semibold text-lg">নিবন্ধিত</div>
                     <div class="mt-3 w-full bg-blue-100 rounded-full h-2 overflow-hidden">
                         <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-1000 ease-out"
-                            style="width: {{$alumnicount}}%"></div>
+                            style="width: {{ $alumnicount }}%"></div>
                     </div>
                 </div>
 
@@ -140,11 +149,11 @@
                         <i
                             class="fas fa-graduation-cap text-3xl text-white group-hover:rotate-12 transition-transform duration-300"></i>
                     </div>
-                    <div class="counter text-5xl font-black text-green-600 mb-3" data-target="{{$alumniall}}">0</div>
+                    <div class="counter text-5xl font-black text-green-600 mb-3" data-target="{{ $alumniall }}">0</div>
                     <div class="text-gray-700 font-semibold text-lg">প্রাক্তন ছাত্র</div>
                     <div class="mt-3 w-full bg-green-100 rounded-full h-2 overflow-hidden">
                         <div class="bg-gradient-to-r from-green-500 to-emerald-600 h-2 rounded-full transition-all duration-1000 ease-out"
-                            style="width: {{$alumniall}}%"></div>
+                            style="width: {{ $alumniall }}%"></div>
                     </div>
                 </div>
 
@@ -155,11 +164,12 @@
                         <i
                             class="fas fa-calendar text-3xl text-white group-hover:rotate-12 transition-transform duration-300"></i>
                     </div>
-                    <div class="counter text-5xl font-black text-orange-600 mb-3" data-target="{{$newscount}}">0</div>
+                    <div class="counter text-5xl font-black text-orange-600 mb-3" data-target="{{ $newscount }}">0
+                    </div>
                     <div class="text-gray-700 font-semibold text-lg">সব খবর</div>
                     <div class="mt-3 w-full bg-orange-100 rounded-full h-2 overflow-hidden">
                         <div class="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full transition-all duration-1000 ease-out"
-                            style="width: {{$newscount}}%"></div>
+                            style="width: {{ $newscount }}%"></div>
                     </div>
                 </div>
 
@@ -179,7 +189,7 @@
                 </div>
             </div>
         </div>
-    </section>   
+    </section>
     {{-- news section --}}
     <section id="news" class="py-16 bg-gradient-to-br from-white to-gray-50">
         <div class="max-w-7xl mx-auto px-6">
@@ -192,12 +202,12 @@
 
                 @foreach ($newsItems as $news)
                     @php
-            $colorKey = 'blue';
-            $textColorClass = tailwind_color_class($colorKey, 'text');     
-            $textHoverClass = tailwind_color_class($colorKey, 'text', '700'); 
-            $bgBadgeClass = tailwind_color_class($colorKey, 'bg', '100');   
-            $textBadgeClass = tailwind_color_class($colorKey, 'text', '700'); 
-        @endphp
+                        $colorKey = 'blue';
+                        $textColorClass = tailwind_color_class($colorKey, 'text');
+                        $textHoverClass = tailwind_color_class($colorKey, 'text', '700');
+                        $bgBadgeClass = tailwind_color_class($colorKey, 'bg', '100');
+                        $textBadgeClass = tailwind_color_class($colorKey, 'text', '700');
+                    @endphp
 
                     <div class="news-card group relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-full h-1"
@@ -209,15 +219,17 @@
                             <div class="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300"
                                 style="background: linear-gradient(to bottom right, {{ $news->color_from ?? '#3b82f6' }}, {{ $news->color_to ?? '#22d3ee' }})">
 
-                                @if($news->photo)
+                                @if ($news->photo)
                                     <img src="{{ asset($news->photo) }}" alt="news image"
                                         class="w-10 h-10 object-cover rounded-xl" />
                                 @else
-                                    <i class="{{ $news->icon_class ?? 'fas fa-info' }} text-white text-lg group-hover:rotate-12 transition-transform duration-300"></i>
+                                    <i
+                                        class="{{ $news->icon_class ?? 'fas fa-info' }} text-white text-lg group-hover:rotate-12 transition-transform duration-300"></i>
                                 @endif
                             </div>
                             <div class="flex-1">
-                                <span class="inline-block {{ $bgBadgeClass }} {{ $textBadgeClass }} font-semibold text-xs px-3 py-1 rounded-full mb-1">
+                                <span
+                                    class="inline-block {{ $bgBadgeClass }} {{ $textBadgeClass }} font-semibold text-xs px-3 py-1 rounded-full mb-1">
                                     {{ $news->category->name }}
                                 </span>
                                 <div class="text-gray-500 text-sm flex items-center">
@@ -227,28 +239,34 @@
                             </div>
                         </div>
 
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:{{ $textColorClass }} transition-colors duration-300">
+                        <h3
+                            class="text-xl font-bold text-gray-900 mb-4 group-hover:{{ $textColorClass }} transition-colors duration-300">
                             {{ $news->title }}
                         </h3>
                         <p class="text-gray-600 text-sm mb-6 leading-relaxed">{{ $news->short_desc }}</p>
 
                         <div class="flex items-center justify-between">
-                             <a href="{{ route('newsDetails', encode_id($news->id)) }}" target="_blank"
-               class="inline-flex items-center {{ $textColorClass }} font-semibold text-sm hover:{{ $textHoverClass }} transition-colors group-hover:translate-x-2 transition-transform duration-300">
-                বিস্তারিত পড়ুন
-                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
-            </a>
+                            <a href="{{ route('newsDetails', encode_id($news->id)) }}" target="_blank"
+                                class="inline-flex items-center {{ $textColorClass }} font-semibold text-sm hover:{{ $textHoverClass }} transition-colors group-hover:translate-x-2 transition-transform duration-300">
+                                বিস্তারিত পড়ুন
+                                <i
+                                    class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                            </a>
                             <div class="flex items-center space-x-2 text-gray-400">
-                            <!-- Facebook Share -->
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}&t={{ urlencode($news->title) }}" target="_blank" rel="noopener noreferrer"  class="hover:text-blue-600 transition-colors" title="Share on Facebook"> <i class="fab fa-facebook-f"></i>
-                            </a>
+                                <!-- Facebook Share -->
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}&t={{ urlencode($news->title) }}"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="hover:text-blue-600 transition-colors" title="Share on Facebook"> <i
+                                        class="fab fa-facebook-f"></i>
+                                </a>
 
-                            <!-- WhatsApp Share -->
-                            <a href="https://wa.me/?text={{ urlencode($news->title . ' ' . request()->fullUrl()) }}" 
-                            target="_blank" rel="noopener noreferrer" class="hover:text-green-500 transition-colors"title="Share on WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                            </a>
-                        </div>
+                                <!-- WhatsApp Share -->
+                                <a href="https://wa.me/?text={{ urlencode($news->title . ' ' . request()->fullUrl()) }}"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="hover:text-green-500 transition-colors"title="Share on WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -256,7 +274,7 @@
             </div>
             <div class="text-center mt-12">
                 <a href="{{ route('news') }}" target="_blank"
-                class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+                    class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
                     <i class="fas fa-newspaper mr-2"></i> সব খবর দেখুন
                 </a>
             </div>
@@ -281,9 +299,9 @@
 
             <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
                 <div class="text-center mb-8">
-                    <h4 class="text-xl font-bold text-red-500 mb-4">
+                    {{-- <h4 class="text-xl font-bold text-red-500 mb-4">
                         আপনার বিবরণ পূরণ করার পুর্বে বিকাশ থেকে সেন্ড মানি/ক্যাশ আউট নিশ্চিত করুন
-                    </h4>
+                    </h4> --}}
                 </div>
                 <form action="{{ route('registration.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -346,73 +364,84 @@
                         </div>
                     </div>
                     {{-- Payment Info --}}
-                    <div
-                        class="bg-gradient-to-br from-green-50 to-emerald-50  mb-6 p-6 rounded-xl border border-green-200">
-                        <h3 class="text-xl font-bold text-green-800 mb-6 flex items-center">
-                            <i class="fas fa-credit-card text-green-600 mr-3"></i> পেমেন্ট তথ্য
-                        </h3>
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label class="block text-gray-700 font-semibold mb-2">পেমেন্ট পদ্ধতি <span
-                                        class="text-red-500">*</span></label>
-                                <select name="payment_method" class="form-input">
-                                    <option value="">পেমেন্ট মাধ্যম নির্বাচন করুন</option>
-                                    <option value="bkash Agent"
-                                        {{ old('payment_method') == 'bkash Agent' ? 'selected' : '' }}>
-                                        🟣 বিকাশ (Agent)
-                                    </option>
-                                    <option value="bkash personal"
-                                        {{ old('payment_method') == 'bkash personal' ? 'selected' : '' }}>
-                                        🟣 বিকাশ (Personal)
-                                    </option>
-                                </select>
-                                @error('payment_method')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
+                    <div class="relative mb-6 p-6 rounded-xl border border-green-200 overflow-hidden"
+                        style="background: url('{{ asset('storage/' . ($setting->payment_bg ?? 'default-payment-bg.jpg')) }}') center center / cover no-repeat;">
+                        <div class="absolute inset-0 bg-white bg-opacity-90 rounded-xl"></div> {{-- Overlay --}}
+
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-bold text-green-800 mb-6 flex items-center">
+                                <i class="fas fa-credit-card text-green-600 mr-3"></i> পেমেন্ট তথ্য
+                            </h3>
+
+                            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label class="block text-gray-700 font-semibold mb-2">মোট পেমেন্ট (টাকা) <span
+                                            class="text-red-500">*</span></label>
+                                    <input type="text" id="totalAmount" name="amount" class="form-input bg-gray-100"
+                                        value="{{ old('amount', '০') }}" readonly>
+                                    @error('amount')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="">
+                                    <label class="block text-gray-700 font-semibold">কিভাবে পেমেন্ট
+                                        করবেন
+                                        QR কোড ব্যবহার করে</label>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"
+                                        viewBox="0 0 152 152">
+                                        <path fill="#d81414"
+                                            d="M100.87 47.41H51.13A15.13 15.13 0 0 0 36 62.55v26.9a15.13 15.13 0 0 0 15.13 15.14h49.74A15.13 15.13 0 0 0 116 89.45v-26.9a15.13 15.13 0 0 0-15.13-15.14zM65.46 88.26V63.74L86.54 76z" />
+                                    </svg>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-gray-700 font-semibold mb-2">মোট পেমেন্ট (টাকা) <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="totalAmount" name="amount" class="form-input bg-gray-100"
-                                    value="{{ old('amount', '০') }}" readonly>
+
+                            {{-- <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-gray-700 font-semibold mb-2">
+                                        যে নম্বর থেকে পেমেন্ট করেছেন <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="tel" name="bkash_num" value="{{ old('bkash_num') }}"
+                                        class="form-input" placeholder="০১৭xxxxxxxx">
+                                    @error('bkash_num')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-semibold mb-2">
+                                        Transaction ID <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" class="form-input" name="bkash_trans_id"
+                                        value="{{ old('bkash_trans_id') }}" placeholder="যেমন: BKH123ABC789">
+                                    @error('bkash_trans_id')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div> --}}
+
+                            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                                <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                        <i class="fas fa-info-circle mr-2"></i> পেমেন্ট নির্দেশনা
+                                    </h4>
+                                    <p class="text-sm text-blue-700">• বিকাশ: <strong>+৮৮০১৯১৫৮৭১৬৪৪</strong> (Personal)
+                                    </p>
+                                </div>
+                                <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                    <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                        <i class="fas fa-image mr-2"></i> স্ক্যান করুন
+                                    </h4>
+                                    <img src="{{ asset('assets/images/qr-code.png') }}"
+                                        alt="QR Code" class="w-32 h-32 object-cover mx-auto">
+                                </div>
                             </div>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-gray-700 font-semibold mb-2">
-                                    যে নম্বর থেকে পেমেন্ট করেছেন <span class="text-red-500">*</span>
-                                </label>
-                                <input type="tel" name ="bkash_num" value="{{ old('bkash_num') }}"
-                                    class="form-input" placeholder="০১৭xxxxxxxx">
-                                @error('bkash_num')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-semibold mb-2">
-                                    Transaction ID <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" class="form-input" name="bkash_trans_id"
-                                    value="{{ old('bkash_trans_id') }}" placeholder="যেমন: BKH123ABC789">
-                                @error('bkash_trans_id')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                            <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
-                                <i class="fas fa-info-circle mr-2"></i> পেমেন্ট নির্দেশনা
-                            </h4>
-                            <p class="text-sm text-blue-700 space-y-1">• বিকাশ: <strong>+৮৮০ ১৭০০০০০০</strong>
-                                (Personal)</p>
                         </div>
                     </div>
+
                     {{-- Personal Info --}}
                     <div class="mb-8">
                         <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
                             <i class="fas fa-user text-blue-600 mr-3"></i> ব্যক্তিগত তথ্য
                         </h3>
-
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">পূর্ণ নাম <span
@@ -440,7 +469,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="grid md:grid-cols-2 gap-6 mt-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">পিতার নাম <span
@@ -468,7 +496,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="grid md:grid-cols-1 gap-6 mt-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">ছবি আপলোড <span
@@ -479,7 +506,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="mt-6">
                             <label class="block text-gray-700 font-semibold mb-2">টিশার্ট সাইজ <span
                                     class="text-red-500">*</span></label>
@@ -503,7 +529,6 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
                             <i class="fas fa-phone text-purple-600 mr-3"></i> যোগাযোগের তথ্য
                         </h3>
-
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">মোবাইল নম্বর <span
@@ -697,19 +722,19 @@
             <div class="grid md:grid-cols-3 gap-8 mb-12">
                 <div class="bg-green-50 p-8 rounded-2xl text-center border border-green-200">
                     <div class="text-sm text-green-600 mb-2">মোট আয়</div>
-                    <div class="text-4xl font-bold text-green-600 mb-2">১,৬০,০০০</div>
+                    <div class="text-4xl font-bold text-green-600 mb-2">০.০০</div>
                     <div class="text-sm text-green-600">টাকা</div>
                 </div>
 
                 <div class="bg-red-50 p-8 rounded-2xl text-center border border-red-200">
                     <div class="text-sm text-red-600 mb-2">মোট ব্যয়</div>
-                    <div class="text-4xl font-bold text-red-600 mb-2">১,৩৫,৩০০</div>
+                    <div class="text-4xl font-bold text-red-600 mb-2">০.০০</div>
                     <div class="text-sm text-red-600">টাকা</div>
                 </div>
 
                 <div class="bg-blue-50 p-8 rounded-2xl text-center border border-blue-200">
                     <div class="text-sm text-blue-600 mb-2">উদ্বৃত্ত</div>
-                    <div class="text-4xl font-bold text-blue-600 mb-2">৫৭০০</div>
+                    <div class="text-4xl font-bold text-blue-600 mb-2">০.০০</div>
                     <div class="text-sm text-blue-600">টাকা</div>
                 </div>
             </div>
@@ -724,32 +749,50 @@
 
         </div>
     </section>
-@php
-    $sponsors = \App\Models\Sponsor::all();
-@endphp
 
-<section class="py-16 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">অনুষ্ঠানের স্পনসর</h2>
-            <p class="text-xl text-gray-600">
-                আমাদের পুনর্মিলনীতে যারা স্পনসর হিসেবে যুক্ত হয়েছে, সেইসব প্রতিষ্ঠানকে আন্তরিক ধন্যবাদ
-            </p>
-            <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
-        </div>
-
-        <div class="swiper mySwiper mt-12">
-            <div class="swiper-wrapper h-32">
-                @foreach($sponsors as $sponsor)
-                    <div class="swiper-slide flex justify-center">
-                        <img class="rounded-2xl h-full object-contain"
-                            src="{{ asset('storage/' . $sponsor->image) }}" alt="">
+    {{-- অনুষ্ঠানের স্পনসর --}}
+    <!-- images carusel -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">অনুষ্ঠানের স্পনসর</h2>
+                <p class="text-xl text-gray-600">
+                    আমাদের পুনর্মিলনীতে যারা স্পনসর হিসেবে যুক্ত হয়েছে, সেইসব প্রতিষ্ঠানকে আন্তরিক ধন্যবাদ
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+            <!-- Swiper -->
+            <div class="swiper mySwiper mt-12">
+                <div class="swiper-wrapper h-32">
+                    <!-- Repeat a few times for smooth loop -->
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
                     </div>
-                @endforeach
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
+                    </div>
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
+                    </div>
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
+                    </div>
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
+                    </div>
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
+                    </div>
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
+                    </div>
+                    <div class="swiper-slide flex justify-center"><img class="rounded-2xl"
+                            src="{{ asset('assets/images/1.jpg') }}" alt="">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
     <!-- Contact Section -->
     <section id="contact" class="py-16 bg-gradient-to-br from-purple-900 to-blue-900 text-white">
         <div class="max-w-6xl mx-auto px-6">
@@ -781,7 +824,7 @@
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">বিদ্যালয়ের ঠিকানা</h3>
-                        <p class="text-purple-100">ছাতারপাইয়া, সেনবাগ, নোয়াখালী, বাংলাদেশ সদর, কুমিল্লা</p>
+                        <p class="text-purple-100">ছাতারপাইয়া, সেনবাগ, নোয়াখালী, বাংলাদেশ</p>
                     </div>
                 </div>
 
@@ -861,8 +904,8 @@
         @endif
     });
 </script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
         const nameInput = document.getElementById('nameSearch');
         const batchSelect = document.querySelector('select[name="batch"]');
         const alumniCards = document.querySelectorAll('.alumni-card');

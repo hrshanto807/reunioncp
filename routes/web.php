@@ -10,6 +10,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\SiteSettingController;
 
 // login page
 Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
@@ -52,9 +53,18 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sponsors', SponsorController::class);
     // registration resource
     Route::resource('registration', RegistrationController::class);
+
+    // site settings
+    Route::get('site-settings/edit', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
+    Route::put('site-settings/update', [SiteSettingController::class, 'update'])->name('site-settings.update');
+    Route::get('/admin/hero-section/edit', [SiteSettingController::class, 'heroEdit'])->name('hero-section.edit');
+    Route::put('/admin/hero-section/update', [SiteSettingController::class, 'heroUpdate'])->name('hero-section.update');
+
 });
 
 
 
 Route::get('blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 Route::post('store/student', [RegistrationController::class, 'store'])->name('registration.store');
+
+// npx tailwindcss -i ./public/assets/css/tailwind.css -o ./public/assets/css/tailwind.output.css --watch

@@ -25,7 +25,7 @@
                 <a href="{{ route('home') }}" class="flex items-center justify-center text-purple-600 text-3xl" title="visit Website" target="_blank"> <i class="fa-solid fa-globe"></i></a>
                 <button id="profileToggleBtn" class="align-middle rounded-full focus:outline-none" aria-label="Account"
                     aria-haspopup="true">
-                    <img class="object-cover w-10 h-10 rounded-full" src="{{ asset('assets/logo.png') }}" alt="Profile" />
+                    <img class="object-cover w-10 h-10 rounded-full" src="{{$setting && $setting->logo ? asset($setting->logo) : asset('assets/logo.png')}}" alt="Profile" />
                 </button>
 
                 <!-- Dropdown -->

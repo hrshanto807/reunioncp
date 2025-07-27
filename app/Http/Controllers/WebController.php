@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Registration;
 use App\Models\Blog;
 use Carbon\Carbon;
+use App\Models\HeroSection;
 
 
 
@@ -31,7 +32,9 @@ class WebController extends Controller
         $newscount = Blog::orderBy('id', 'desc')->count();
         $alumni = Registration::latest()->where('status', 'Approved')->take(8)->get();
         $newsItems = Blog::orderBy('id', 'desc')->take(3)->get();
-        return view('pages.web.index', compact('alumnicount', 'alumni', 'daysLeft', 'newsItems', 'newscount','alumniall'));
+
+        $hero = HeroSection::first();      
+        return view('pages.web.index', compact('alumnicount', 'alumni', 'daysLeft', 'newsItems', 'newscount', 'alumniall', 'hero'));
     }
 
     //student view

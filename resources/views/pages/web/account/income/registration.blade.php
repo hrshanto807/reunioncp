@@ -34,7 +34,7 @@
                         <tbody>
                             @foreach ($registrations as $index => $item)
                                 <tr>
-                                    <td class="py-3 px-4 border border-gray-300">{{ $registrations->firstItem() + $index }}
+                                    <td class="py-3 px-4 border border-gray-300">{{ $loop->index  +1 }}
                                     </td>
                                     <td class="py-3 px-4 border border-gray-300">{{ $item->name }}</td>
                                     <td class="py-3 px-4 border border-gray-300">{{ $item->batch }}</td>

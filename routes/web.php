@@ -11,6 +11,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\SiteSettingController;
+use App\Http\Controllers\DonationController;
 
 // login page
 Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
@@ -33,6 +34,7 @@ Route::get('/registrationList', [WebController::class, 'registration'])->name('r
 //sponser view
 Route::get('/sponser', [WebController::class, 'sponser'])->name('sponser');
 //donation view
+
 Route::get('/donation', [WebController::class, 'donation'])->name('donation');
 
 // admin routes
@@ -53,12 +55,24 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sponsors', SponsorController::class);
     // registration resource
     Route::resource('registration', RegistrationController::class);
+    Route::post('/tokens/update-status/{tokenCode}', [RegistrationController::class, 'updateTokenStatus'])->name('tokens.updateStatus');
+
+
+    Route::get('/tokens/by-registration/{id}', [RegistrationController::class, 'getTokensByRegistration']);
+
+
 
     // site settings
     Route::get('site-settings/edit', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
     Route::put('site-settings/update', [SiteSettingController::class, 'update'])->name('site-settings.update');
-    Route::get('/admin/hero-section/edit', [SiteSettingController::class, 'heroEdit'])->name('hero-section.edit');
-    Route::put('/admin/hero-section/update', [SiteSettingController::class, 'heroUpdate'])->name('hero-section.update');
+    Route::get('hero-section/edit', [SiteSettingController::class, 'heroEdit'])->name('hero-section.edit');
+    Route::put('hero-section/update', [SiteSettingController::class, 'heroUpdate'])->name('hero-section.update');
+
+    // donation routes
+    Route::get('/donate', [DonationController::class, 'create'])->name('donate.create');
+    Route::get('/donations', [DonationController::class, 'index'])->name('donate.index'); // for admin view
+    Route::put('/donations/{id}/status', [DonationController::class, 'updateStatus'])->name('donations.updateStatus');
+
 
 });
 
@@ -66,5 +80,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 Route::post('store/student', [RegistrationController::class, 'store'])->name('registration.store');
+Route::post('/donate', [DonationController::class, 'store'])->name('donate.store');
 
 // npx tailwindcss -i ./public/assets/css/tailwind.css -o ./public/assets/css/tailwind.output.css --watch

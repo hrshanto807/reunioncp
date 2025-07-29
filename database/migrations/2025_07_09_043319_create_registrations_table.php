@@ -12,26 +12,26 @@ return new class extends Migration {
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->year('batch');
-            $table->string('father_name');
-            $table->string('blood');
-            $table->string('photo')->nullable(); // store uploaded photo path
-            $table->string('tshirt');
-            $table->string('phone');
+            $table->string('name')->nullable();
+            $table->year('batch')->nullable();
+            $table->string('father_name')->nullable();
+            $table->string('blood')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('tshirt')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('profession')->nullable();
-            $table->text('present_address');
-            $table->text('permanent_address');
+            $table->text('present_address')->nullable();
+            $table->text('permanent_address')->nullable();
             $table->string('representative_name')->nullable();
             $table->enum('registration_type', ['single', 'group']);
             $table->integer('participant_count')->default(1);
             $table->boolean('terms_agreed')->default(false);
-            $table->decimal('amount', 10, 2);
-             $table->string('bkash_num');
-             $table->string('bkash_trans_id');
-            $table->enum('payment_method', ['bkash Agent','bkash personal']);
-            $table->enum('status', ['painding', 'Approved', 'Cancel']);
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->string('bkash_num')->nullable();
+            $table->string('bkash_trans_id')->nullable();
+            $table->enum('payment_method', ['bkash Agent', 'bkash personal']);
+            $table->enum('status', ['pending', 'approved', 'cancel']);
             $table->timestamps();
         });
     }

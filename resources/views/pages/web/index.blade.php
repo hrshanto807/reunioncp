@@ -350,7 +350,7 @@
                                     চান? <span class="text-red-500">*</span></label>
                                 <select id="participantCount" name="participant_count" class="form-input">
                                     <option value="">অংশগ্রহণকারী সংখ্যা নির্বাচন করুন</option>
-                                    @for ($i = 2; $i <= 6; $i++)
+                                    @for ($i = 2; $i <= 10; $i++)
                                         <option value="{{ $i }}"
                                             {{ old('participant_count') == $i ? 'selected' : '' }}>
                                             {{ $i }} জন
@@ -384,14 +384,13 @@
                                     @enderror
                                 </div>
                                 <div class="">
-                                    <label class="block text-gray-700 font-semibold">কিভাবে পেমেন্ট
-                                        করবেন
-                                        QR কোড ব্যবহার করে</label>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"
-                                        viewBox="0 0 152 152">
-                                        <path fill="#d81414"
-                                            d="M100.87 47.41H51.13A15.13 15.13 0 0 0 36 62.55v26.9a15.13 15.13 0 0 0 15.13 15.14h49.74A15.13 15.13 0 0 0 116 89.45v-26.9a15.13 15.13 0 0 0-15.13-15.14zM65.46 88.26V63.74L86.54 76z" />
-                                    </svg>
+                                    <label class="block text-gray-700 font-semibold">কিভাবে পেমেন্ট করবেন?</label>
+                                    <a href="{{ $setting->qr_video_url }}" title="QR পেমেন্ট ভিডিও"
+                                        target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="80"
+                                            height="80" viewBox="0 0 152 152">
+                                            <path fill="#d81414"
+                                                d="M100.87 47.41H51.13A15.13 15.13 0 0 0 36 62.55v26.9a15.13 15.13 0 0 0 15.13 15.14h49.74A15.13 15.13 0 0 0 116 89.45v-26.9a15.13 15.13 0 0 0-15.13-15.14zM65.46 88.26V63.74L86.54 76z" />
+                                        </svg></a>
                                 </div>
                             </div>
 
@@ -430,8 +429,8 @@
                                     <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
                                         <i class="fas fa-image mr-2"></i> স্ক্যান করুন
                                     </h4>
-                                    <img src="{{ asset('assets/images/qr-code.png') }}"
-                                        alt="QR Code" class="w-32 h-32 object-cover mx-auto">
+                                    <img src="{{ asset('assets/images/qr-code.png') }}" alt="QR Code"
+                                        class="w-32 h-32 object-cover mx-auto">
                                 </div>
                             </div>
                         </div>

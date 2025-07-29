@@ -7,6 +7,8 @@ use App\Models\Registration;
 use App\Models\Blog;
 use Carbon\Carbon;
 use App\Models\HeroSection;
+use App\Models\Donation;
+use App\Models\SiteSetting;
 
 
 
@@ -33,10 +35,11 @@ class WebController extends Controller
         $alumni = Registration::latest()->where('status', 'Approved')->take(8)->get();
         $newsItems = Blog::orderBy('id', 'desc')->take(3)->get();
 
-        $hero = HeroSection::first();      
-        return view('pages.web.index', compact('alumnicount', 'alumni', 'daysLeft', 'newsItems', 'newscount', 'alumniall', 'hero'));
-    }
+        $setting = SiteSetting::first();
 
+        $hero = HeroSection::first();      
+        return view('pages.web.index', compact('alumnicount', 'alumni', 'daysLeft', 'newsItems', 'newscount', 'alumniall', 'hero', 'setting'));
+    }
     //student view
     public function student()
     {
@@ -58,7 +61,6 @@ class WebController extends Controller
 
         return view('pages.web.newsDetails', compact('news'));
     }
-
     //account view
     public function account()
     {
@@ -67,8 +69,7 @@ class WebController extends Controller
     //registration view
     public function registration()
     {
-
-        $registrations = Registration::orderBy('id', 'desc')->paginate(10);
+        $registrations = Registration::orderBy('id', 'desc')->where('status', 'Approved')->paginate(10);
         return view('pages.web.account.income.registration', compact('registrations'));
     }
     //sponser view
@@ -79,6 +80,7 @@ class WebController extends Controller
     //donation view
     public function donation()
     {
-        return view('pages.web.account.income.donation');
+        $donations = Donation::orderBy('id', 'desc')->where('status', 'Approved')->paginate(10);
+        return view('pages.web.account.income.donation', compact('donations'));
     }
 }

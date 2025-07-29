@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 
 if (!function_exists('englishNumber')) {
@@ -21,7 +22,7 @@ if (!function_exists('banglaNumber')) {
     }
 }
 
-if (! function_exists('tailwind_color_class')) {
+if (!function_exists('tailwind_color_class')) {
     /**
      * Map short color names to Tailwind CSS color classes
      *
@@ -61,5 +62,11 @@ if (!function_exists('encode_id')) {
         } catch (\Exception $e) {
             abort(404); // Invalid or tampered encrypted ID
         }
+    }
+
+
+    function generateUniqueCode()
+    {
+        return strtoupper(Str::random(10)); // use Illuminate\Support\Str
     }
 }

@@ -8,12 +8,14 @@
             : 'ছাতার পাইয়া বহুমুখী উচ্চ বিদ্যালয় - পুনর্মিলনী ২০২৬';
     $metaDescription =
         $setting && $setting->meta_description ? $setting->meta_description : 'Default description here...';
+    $Qr_videoUrl = $setting && $setting->qr_video_url ? $setting->qr_video_url : '';
     $favicon = $setting && $setting->favicon ? asset($setting->favicon) : asset('assets/logo.png');
     $logo = $setting && $setting->logo ? asset($setting->logo) : asset('assets/logo.png');
 @endphp
 <!DOCTYPE html>
 <html lang="bn">
-<head>  
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
@@ -23,8 +25,7 @@
     <!-- Dynamic Meta Description -->
     <meta name="description" content="{{ $metaDescription }}">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
@@ -93,6 +94,17 @@
         <i class="fas fa-arrow-up"></i>
     </a>
     <div id="top"></div>
+    @if (session('success'))
+        <div id="toast-success" class="fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50">
+            {{ session('success') }}
+        </div>
+        <script>
+            setTimeout(() => {
+                const toast = document.getElementById('toast-success');
+                if (toast) toast.remove();
+            }, 3000);
+        </script>
+    @endif
     <div> @yield('content') </div>
     <!-- Donation Modal -->
     <div id="donationModal" class="fixed inset-0 z-50 hidden">
@@ -113,52 +125,63 @@
                 </div>
                 <!-- Body -->
                 <div class="px-6 py-8">
-                    <form class="space-y-6">
+                    @if (session('success'))
+                        <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">{{ session('success') }}</div>
+                    @endif
+                    <form action="{{ route('donate.store') }}" method="POST" class="space-y-6">
+                        @csrf
                         <div class="grid md:grid-cols-2 gap-6">
-                            <!-- Full Name -->
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">নাম <span
                                         class="text-red-500">*</span></label>
-                                <input type="text" class="form-input w-full border rounded-lg px-4 py-2"
-                                    placeholder="আব্দুল করিম">
+                                <input name="name" value="{{ old('name') }}" type="text"
+                                    class="form-input w-full border rounded-lg px-4 py-2" placeholder="আব্দুল করিম">
+                                @error('name')
+                                    <small class="text-red-500">{{ $message }}</small>
+                                @enderror
                             </div>
-                            <!-- Mobile -->
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">মোবাইল নম্বর <span
                                         class="text-red-500">*</span></label>
-                                <input type="tel" class="form-input w-full border rounded-lg px-4 py-2"
-                                    placeholder="০১৭xxxxxxxx">
+                                <input name="mobile" value="{{ old('mobile') }}" type="tel"
+                                    class="form-input w-full border rounded-lg px-4 py-2" placeholder="০১৭xxxxxxxx">
+                                @error('mobile')
+                                    <small class="text-red-500">{{ $message }}</small>
+                                @enderror
                             </div>
-                            <!-- Payment Method -->
                             <div>
-                                <label class="block font-semibold text-gray-700 mb-1">পেমেন্ট পদ্ধতি <span
+                                <label class="block font-semibold text-gray-700 mb-1">মোট পেমেন্ট (টাকা) <span
                                         class="text-red-500">*</span></label>
-                                <select class="form-input">
-                                    <option value="">পেমেন্ট মাধ্যম নির্বাচন করুন</option>
-                                    <option value="bkash">🟣 বিকাশ (bKash)</option>
-                                </select>
+                                <input name="amount" value="{{ old('amount') }}" type="number" step="0.01"
+                                    class="form-input w-full border rounded-lg px-4 py-2" placeholder="amount">
+                                @error('amount')
+                                    <small class="text-red-500">{{ $message }}</small>
+                                @enderror
                             </div>
-                            <!-- Amount -->
-                            <div>
-                                <label class="block font-semibold text-gray-700 mb-1">মোট পেমেন্ট (টাকা)
-                                    <span class="text-red-500">*</span></label>
-                                <input type="number" class="form-input w-full border rounded-lg px-4 py-2"
-                                    placeholder="amount">
+                            <div class="">
+                                <label class="block text-gray-700 font-semibold">কিভাবে পেমেন্ট করবেন?</label>
+                                <a href="{{ $Qr_videoUrl }}" target="_blank" title="QR পেমেন্ট ভিডিও">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"
+                                        viewBox="0 0 152 152">
+                                        <path fill="#d81414"
+                                            d="M100.87 47.41H51.13A15.13 15.13 0 0 0 36 62.55v26.9a15.13 15.13 0 0 0 15.13 15.14h49.74A15.13 15.13 0 0 0 116 89.45v-26.9a15.13 15.13 0 0 0-15.13-15.14zM65.46 88.26V63.74L86.54 76z" />
+                                    </svg>
+                                </a>
                             </div>
-                            <div>
-                                <label class="block text-gray-700 font-semibold mb-2">
-                                    যে নম্বর থেকে পেমেন্ট করেছেন <span class="text-red-500">*</span>
-                                </label>
-                                <input type="tel" class="form-input" placeholder="০১৭xxxxxxxx">
+                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                <h4 class="font-semibold text-blue-800 mb-2 flex items-center"><i
+                                        class="fas fa-info-circle mr-2"></i> পেমেন্ট নির্দেশনা</h4>
+                                <p class="text-sm text-blue-700">• বিকাশ: <strong>+৮৮০১৯১৫৮৭১৬৪৪</strong> (Personal)
+                                </p>
                             </div>
-                            <div>
-                                <label class="block text-gray-700 font-semibold mb-2">
-                                    Transaction ID <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" class="form-input" placeholder="যেমন: BKH123ABC789">
+                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200 text-center">
+                                <h4 class="font-semibold text-blue-800 mb-2 flex items-center justify-center"><i
+                                        class="fas fa-image mr-2"></i> স্ক্যান করুন</h4>
+                                <img src="{{ asset('assets/images/qr-code.png') }}" alt="QR Code"
+                                    class="w-32 h-32 object-cover mx-auto">
                             </div>
                         </div>
-                        <!-- Submit -->
+
                         <button type="submit"
                             class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                             <i class="fas fa-check-circle mr-2"></i> ডোনেশন করুন

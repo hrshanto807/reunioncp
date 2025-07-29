@@ -15,7 +15,9 @@ return new class extends Migration {
             $table->foreignId('registration_id')->constrained()->onDelete('cascade');
             $table->string('code', 191)->unique(); // 👈 Fix here
             $table->string('owner_name');
+            $table->json('tokens')->nullable(); // Store multiple tokens as JSON
             $table->boolean('is_guest')->default(false);
+            $table->enum('status', ['pending', 'accepted', 'cancelled'])->default('pending');
             $table->timestamps();
         });
 

@@ -11,5 +11,6 @@ class SiteSetting extends Model
         'meta_description',
         'favicon',
         'logo',
+        'qr_video_url',
     ];
 }

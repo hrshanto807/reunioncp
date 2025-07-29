@@ -57,6 +57,15 @@
                 @endif
             </div>
 
+            <div>
+                <label for="qr_video_url" class="block font-semibold">Payment Tutorial Video Url</label>
+                <input type="text" name="qr_video_url" id="qr_video_url"
+                    value="{{ old('qr_video_url', $setting->qr_video_url ?? '') }}" class="border p-2 w-full" />
+                @error('qr_video_url')
+                    <p class="text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Save Changes</button>
         </form>
     </div>

@@ -9,6 +9,10 @@ class Token extends Model
     protected $table = 'tokens';
 
     protected $guarded = [];
+
+    protected $casts = [
+        'tokens' => 'array',
+    ];
     public function registration()
     {
         return $this->belongsTo(Registration::class);

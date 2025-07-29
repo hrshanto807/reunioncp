@@ -3,7 +3,9 @@
     <div class="py-4 text-gray-500">
         <div>
             <a href="{{ route('dashboard') }}" class="flex items-center pl-4">
-                <img class="h-20 w-20 rounded-full" src="{{$setting && $setting->logo ? asset($setting->logo) : asset('assets/logo.png')}}" alt="">
+                <img class="h-20 w-20 rounded-full"
+                    src="{{ $setting && $setting->logo ? asset($setting->logo) : asset('assets/logo.png') }}"
+                    alt="">
             </a>
         </div>
         {{-- dashboard --}}
@@ -76,9 +78,15 @@
             </li>
 
             {{-- accounts --}}
+            {{-- Accounts --}}
             <li class="relative px-6 py-3">
+                @if (Request::is('donations*') || Request::is('account*'))
+                    <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                        aria-hidden="true"></span>
+                @endif
                 <button
-                    class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800"
+                    class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 
+    {{ Request::is('donations*') || Request::is('account*') ? 'text-gray-800' : 'text-gray-500' }} hover:text-gray-800"
                     @click="toggleAccountMenu" aria-haspopup="true">
                     <span class="inline-flex items-center">
                         <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -90,7 +98,8 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </button>
-                <template x-if="isAccountsMenuOpen">
+                <template
+                    x-if="isAccountsMenuOpen || {{ Request::is('donations*') || Request::is('account*') ? 'true' : 'false' }}">
                     <ul x-transition:enter="transition-all ease-in-out duration-300"
                         x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl"
                         x-transition:leave="transition-all ease-in-out duration-300"
@@ -98,10 +107,10 @@
                         class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50"
                         aria-label="submenu">
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
-                            <a class="w-full" href="pages/news-list.html">Account List</a>
+                            <a class="w-full" href="#">Account List</a>
                         </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
-                            <a class="w-full" href="pages/category-list.html">Donation List</a>
+                            <a class="w-full" href="{{ route('donate.index') }}">Donation List</a>
                         </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
                             <a class="w-full" href="pages/category-list.html">Sponser List</a>
@@ -178,9 +187,15 @@
                 </template>
             </li>
             {{-- cms --}}
+            {{-- CMS --}}
             <li class="relative px-6 py-3">
+                @if (Request::is('hero-section*') || Request::is('sponsors*') || Request::is('pages*'))
+                    <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                        aria-hidden="true"></span>
+                @endif
                 <button
-                    class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800"
+                    class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150
+        {{ Request::is('hero-section*') || Request::is('sponsors*') || Request::is('pages*') ? 'text-gray-800' : 'text-gray-500' }} hover:text-gray-800"
                     @click="toggleCMSMenu" aria-haspopup="true">
                     <span class="inline-flex items-center">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
@@ -197,25 +212,19 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </button>
-                <template x-if="isCMSMenuOpen">
+                <template
+                    x-if="isCMSMenuOpen || {{ Request::is('hero-section*') || Request::is('sponsors*') || Request::is('pages*') ? 'true' : 'false' }}">
                     <ul x-transition:enter="transition-all ease-in-out duration-300"
                         x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl"
                         x-transition:leave="transition-all ease-in-out duration-300"
                         x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
                         class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50"
-                        aria-label="submenu">                       
+                        aria-label="submenu">
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
-                            <a class="w-full" href="{{ route('hero-section.edit')}}">Hero Section</a>
-                        </li>
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
-                            <a class="w-full" href="pages/all-titles.html">All Titles</a>
-                        </li>
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
-                            <a class="w-full" href="pages/activity-schedule.html">Activity Schedule</a>
+                            <a class="w-full" href="{{ route('hero-section.edit') }}">Hero Section</a>
                         </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
                             <a class="w-full" href="{{ route('sponsors.index') }}">Sponsors</a>
-                        </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800">
                             <a class="w-full" href="pages/contact-us.html">Contact Us</a>
                         </li>
@@ -234,7 +243,7 @@
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 
         {{ Request::is('site-settings.edit') ? 'text-gray-800' : 'text-gray-500' }} hover:text-gray-800"
                     href="{{ route('site-settings.edit') }}">
-                <i class="fa-solid fa-gear"></i>
+                    <i class="fa-solid fa-gear"></i>
                     <span class="ml-4">Setting</span>
                 </a>
             </li>

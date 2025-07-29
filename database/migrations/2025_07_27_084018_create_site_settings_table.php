@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->text('meta_description')->nullable();
             $table->string('favicon')->nullable();
             $table->string('logo')->nullable();
+            $table->string('qr_video_url')->nullable();
+
             $table->timestamps();
         });
     }

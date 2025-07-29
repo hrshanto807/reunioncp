@@ -21,36 +21,41 @@ class SiteSettingController extends Controller
             'meta_description' => 'nullable|string',
             'favicon' => 'nullable|image|mimes:png,jpg,jpeg,ico|max:2048',
             'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            'qr_video_url' => 'nullable|url|max:255',
         ]);
 
         $setting = SiteSetting::first() ?? new SiteSetting();
 
         $setting->meta_title = $request->meta_title;
         $setting->meta_description = $request->meta_description;
+        $setting->qr_video_url = $request->qr_video_url;
 
+        // Save favicon
         if ($request->hasFile('favicon')) {
             if ($setting->favicon && file_exists(public_path($setting->favicon))) {
                 unlink(public_path($setting->favicon));
             }
-            $faviconPath = $request->file('favicon')->store('uploads', 'public');
-            $setting->favicon = 'storage/' . $faviconPath;
+            $favicon = $request->file('favicon');
+            $faviconName = time() . '_favicon.' . $favicon->getClientOriginalExtension();
+            $favicon->move(public_path('uploads'), $faviconName);
+            $setting->favicon = 'uploads/' . $faviconName;
         }
 
-
+        // Save logo
         if ($request->hasFile('logo')) {
             if ($setting->logo && file_exists(public_path($setting->logo))) {
                 unlink(public_path($setting->logo));
             }
-            $logoPath = $request->file('logo')->store('uploads', 'public');
-            $setting->logo = 'storage/' . $logoPath;
+            $logo = $request->file('logo');
+            $logoName = time() . '_logo.' . $logo->getClientOriginalExtension();
+            $logo->move(public_path('uploads'), $logoName);
+            $setting->logo = 'uploads/' . $logoName;
         }
 
         $setting->save();
 
         return redirect()->back()->with('success', 'Site settings updated successfully.');
     }
-
-
     public function heroEdit()
     {
         $hero = HeroSection::first() ?? new HeroSection();
@@ -66,7 +71,7 @@ class SiteSettingController extends Controller
             'register_button_url' => 'nullable|max:255',
             'announcement_button_text' => 'nullable|string|max:255',
             'announcement_button_url' => 'nullable|max:255',
-            'background_image' => 'nullable|image',
+            'background_image' => 'nullable|image|max:4096',
         ]);
 
         $hero = HeroSection::first() ?? new HeroSection();
@@ -75,9 +80,10 @@ class SiteSettingController extends Controller
             if ($hero->background_image && file_exists(public_path($hero->background_image))) {
                 unlink(public_path($hero->background_image));
             }
-
-            $backgroundPath = $request->file('background_image')->store('uploads', 'public');
-            $hero->background_image = 'storage/' . $backgroundPath;
+            $image = $request->file('background_image');
+            $imageName = time() . '_bg.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads'), $imageName);
+            $hero->background_image = 'uploads/' . $imageName;
         }
 
         $hero->fill($request->only([
@@ -89,10 +95,12 @@ class SiteSettingController extends Controller
             'announcement_button_text',
             'announcement_button_url',
         ]));
+
         $hero->save();
 
         return redirect()->back()->with('success', 'Hero section updated successfully.');
     }
+
 
 }
 
